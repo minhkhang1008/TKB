@@ -1,0 +1,166 @@
+/* General Styling */
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #2c3e50, #34495e); /* Dark gradient */
+    color: #ecf0f1; /* Light text */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+  
+.container {
+    background: #1e272e; /* Dark gray background */
+    border-radius: 15px;
+    padding: 20px;
+    width: 85%;
+    max-width: 1000px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
+}
+  
+/* Headings */
+h1 {
+    font-size: 2rem;
+    color: #f39c12; /* Vibrant orange */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+  
+h2 {
+    font-size: 1.5rem;
+    color: #e74c3c; /* Vibrant red */
+    text-align: center;
+    margin-top: 20px;
+}
+  
+/* Timetable */
+.timetable table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    text-align: center;
+    background: #2f3640; /* Darker gray for table background */
+    border-radius: 10px;
+    overflow: hidden;
+}
+  
+.timetable th, .timetable td {
+    padding: 15px;
+    border: 1px solid #4b6584; /* Subtle border */
+}
+  
+.timetable th {
+    background: #3c6382; /* Soft blue */
+    color: #ecf0f1; /* Light text */
+    font-weight: bold;
+}
+  
+.timetable td {
+    background: #1e272e; /* Same as container background */
+    color: #ecf0f1; /* Light text */
+    transition: background-color 0.3s, transform 0.2s;
+}
+  
+.timetable td:hover {
+    background: #4cd137; /* Vibrant green on hover */
+    transform: scale(1.05); /* Subtle zoom effect */
+    cursor: pointer;
+}
+  
+/* Task List */
+.tasks ul {
+    list-style: none;
+    padding: 0;
+}
+  
+.tasks li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
+    padding: 15px;
+    background: linear-gradient(135deg, #485460, #57606f); /* Dark gradient */
+    border-radius: 10px;
+    color: #ecf0f1;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+  
+.tasks li:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+}
+  
+.tasks button {
+    background: #00a8ff; /* Vibrant blue button */
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: background 0.3s, transform 0.2s;
+}
+  
+.tasks button:hover {
+    background: #0097e6; /* Slightly darker blue */
+    transform: scale(1.1);
+}
+  
+.tasks input {
+    margin-left: 10px;
+    padding: 8px;
+    border: 2px solid #718093; /* Neutral gray */
+    border-radius: 5px;
+    background: #2c3e50; /* Dark background */
+    color: #ecf0f1;
+    transition: border 0.3s;
+}
+  
+.tasks input:focus {
+    border: 2px solid #00a8ff; /* Vibrant blue focus */
+    outline: none;
+}
+  
+/* Animations */
+.fade-in {
+    animation: fadeIn 0.6s ease-in-out;
+}
+  
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+}
+  
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .container {
+      width: 95%;
+    }
+  
+    h1 {
+      font-size: 1.8rem;
+    }
+  
+    h2 {
+      font-size: 1.2rem;
+    }
+  
+    .tasks li {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .tasks button {
+      margin-top: 10px;
+      width: 100%;
+    }
+}
