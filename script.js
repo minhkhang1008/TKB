@@ -45,11 +45,14 @@ timetable.forEach((row, periodIndex) => {
 // Render tasks
 const taskList = document.getElementById("task-list");
 const renderTasks = () => {
-  const tomorrowSubjects = [...new Set(timetable.map((row) => row[1]))]; // Unique subjects for tomorrow
+  const today = new Date().getDay();
+  const tomorrowIndex = (today + 1) % 7; // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+  const tomorrowSubjects = timetable.map((row) => row[tomorrowIndex - 1]);
+
   taskList.innerHTML = "";
 
-  tomorrowSubjects.forEach((subject) => {
-    if (subject && tasks[subject]) {
+  Object.keys(tasks).forEach((subject) => {
+    if (tomorrowSubjects.includes(subject)) {
       tasks[subject].forEach((task, index) => {
         const li = document.createElement("li");
         li.classList.add("fade-in");
@@ -64,7 +67,7 @@ const renderTasks = () => {
     }
   });
 
-  renderPendingTasks();
+  renderPendingTasks(today);
 };
 
 // Render pending tasks
@@ -73,14 +76,22 @@ pendingTaskList.id = "pending-task-list";
 pendingTaskList.style.marginTop = "20px";
 document.querySelector(".tasks").appendChild(pendingTaskList);
 
-const renderPendingTasks = () => {
+const renderPendingTasks = (today) => {
   pendingTaskList.innerHTML = "<h2>Các công việc cần hoàn thành</h2>";
+
   Object.keys(tasks).forEach((subject) => {
     tasks[subject].forEach((task) => {
       const nextLesson = calculateNextLesson(subject);
-      const li = document.createElement("li");
-      li.innerHTML = `${subject}: ${task} - Tiết tiếp theo diễn ra vào ${nextLesson}`;
-      pendingTaskList.appendChild(li);
+      const nextLessonDayIndex = daysOfWeek.indexOf(
+        nextLesson.match(/Thứ \d|Chủ nhật/)[0]
+      );
+
+      // If the task is not for tomorrow, display it in pending tasks
+      if (nextLessonDayIndex !== (today + 1) % 7) {
+        const li = document.createElement("li");
+        li.innerHTML = `${subject}: ${task} - Tiết tiếp theo diễn ra vào ${nextLesson}`;
+        pendingTaskList.appendChild(li);
+      }
     });
   });
 };
