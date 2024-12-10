@@ -12,21 +12,17 @@ const timetable = [
 
 const daysOfWeek = ["Chủ nhật", "Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7"];
 
-// Save tasks to localStorage
 const saveTasksToLocalStorage = () => {
   localStorage.setItem("tasks", JSON.stringify(tasks));
 };
 
-// Load tasks from localStorage
 const loadTasksFromLocalStorage = () => {
   const savedTasks = localStorage.getItem("tasks");
   return savedTasks ? JSON.parse(savedTasks) : {};
 };
 
-// Initialize tasks from localStorage
 let tasks = loadTasksFromLocalStorage();
 
-// Render timetable
 const tableBody = document.getElementById("table-body");
 timetable.forEach((row, periodIndex) => {
   const tr = document.createElement("tr");
@@ -42,11 +38,12 @@ timetable.forEach((row, periodIndex) => {
   tableBody.appendChild(tr);
 });
 
-// Render tasks
 const taskList = document.getElementById("task-list");
+const pendingTaskList = document.getElementById("pending-task-list");
+
 const renderTasks = () => {
   const today = new Date().getDay();
-  const tomorrowIndex = (today + 1) % 7; // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+  const tomorrowIndex = (today + 1) % 7;
   const tomorrowSubjects = timetable.map((row) => row[tomorrowIndex - 1]);
 
   taskList.innerHTML = "";
@@ -57,7 +54,7 @@ const renderTasks = () => {
         const li = document.createElement("li");
         li.classList.add("fade-in");
         li.innerHTML = `
-          ${subject}: ${task}
+          <span>${subject}: ${task}</span>
           <div>
             <button onclick="markDone('${subject}', ${index})">Hoàn thành</button>
           </div>
@@ -70,33 +67,31 @@ const renderTasks = () => {
   renderPendingTasks(today);
 };
 
-// Render pending tasks
-const pendingTaskList = document.createElement("ul");
-pendingTaskList.id = "pending-task-list";
-pendingTaskList.style.marginTop = "20px";
-document.querySelector(".tasks").appendChild(pendingTaskList);
-
 const renderPendingTasks = (today) => {
   pendingTaskList.innerHTML = "<h2>Các công việc cần hoàn thành</h2>";
 
   Object.keys(tasks).forEach((subject) => {
-    tasks[subject].forEach((task) => {
+    tasks[subject].forEach((task, index) => {
       const nextLesson = calculateNextLesson(subject);
       const nextLessonDayIndex = daysOfWeek.indexOf(
         nextLesson.match(/Thứ \d|Chủ nhật/)[0]
       );
 
-      // If the task is not for tomorrow, display it in pending tasks
       if (nextLessonDayIndex !== (today + 1) % 7) {
         const li = document.createElement("li");
-        li.innerHTML = `${subject}: ${task} - Tiết tiếp theo diễn ra vào ${nextLesson}`;
+        li.innerHTML = `
+          <span>${subject}: ${task} - Tiết tiếp theo diễn ra vào ${nextLesson}</span>
+          <div>
+            <button onclick="markDone('${subject}', ${index})">Đánh dấu đã hoàn thành</button>
+            <button onclick="editTask('${subject}', ${index})">Chỉnh sửa</button>
+          </div>
+        `;
         pendingTaskList.appendChild(li);
       }
     });
   });
 };
 
-// Mark a task as done
 const markDone = (subject, index) => {
   tasks[subject].splice(index, 1);
   if (tasks[subject].length === 0) delete tasks[subject];
@@ -104,7 +99,15 @@ const markDone = (subject, index) => {
   renderTasks();
 };
 
-// Handle subject click
+const editTask = (subject, index) => {
+  const newTask = prompt("Chỉnh sửa công việc:", tasks[subject][index]);
+  if (newTask !== null && newTask.trim() !== "") {
+    tasks[subject][index] = newTask;
+    saveTasksToLocalStorage();
+    renderTasks();
+  }
+};
+
 document.addEventListener("click", (event) => {
   if (event.target.classList.contains("subject")) {
     const subject = event.target.dataset.subject;
@@ -120,21 +123,19 @@ document.addEventListener("click", (event) => {
   }
 });
 
-// Calculate next lesson date
 const calculateNextLesson = (subject) => {
-  const today = new Date().getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
-  const daysInWeek = 7; // Full week
-  const schoolDays = 5; // Monday to Friday
+  const today = new Date().getDay();
+  const daysInWeek = 7;
+  const schoolDays = 5;
 
   for (let i = 1; i <= daysInWeek; i++) {
-    const dayIndex = (today + i) % daysInWeek; // Loop through days starting from tomorrow
+    const dayIndex = (today + i) % daysInWeek;
 
-    // Skip non-school days
     if (dayIndex === 0 || dayIndex > schoolDays) continue;
 
     if (timetable.some((row) => row[dayIndex - 1] === subject)) {
       const nextLessonDate = new Date();
-      nextLessonDate.setDate(new Date().getDate() + i); // Add i days to today
+      nextLessonDate.setDate(new Date().getDate() + i);
       const dayName = daysOfWeek[dayIndex];
       const dateString = nextLessonDate.toLocaleDateString("vi-VN", {
         day: "2-digit",
@@ -146,5 +147,4 @@ const calculateNextLesson = (subject) => {
   return "<b>Không rõ</b>";
 };
 
-// Initial rendering
 renderTasks();
