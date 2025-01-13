@@ -1,13 +1,13 @@
 const timetable = [
-  ["SHDC", "KHTN", "LSĐL", "Tiếng Anh", "GDCD"],
-  ["HĐTN", "KHTN", "LSĐL", "LSĐL", "KNS"],
-  ["Ngữ văn", "GDTC", "Âm nhạc", "Ngữ văn", "Toán"],
-  ["Ngữ văn", "GDTC", "Toán", "Ngữ văn", "Văn"],
-  ["Toán", "Công nghệ", "HĐ TNHN", "HĐ TNHN", "Văn"],
-  ["EMG English", "Anh", "Tin học", "EMG Math", "EMG Science"],
-  ["EMG English", "Anh", "Toán", "EMG Math", "EMG Science"],
-  ["EMG English", "Mỹ thuật", "GDĐP", "KHTN", "EMG Science"],
-  ["N khóa", "", "", "KHTN", ""],
+  ["HĐTN", "Tiếng Anh", "KNS", "Mỹ Thuật", "KHTN"],
+  ["HĐTN", "Ngữ Văn", "GDCD", "Tin Học", "Công nghệ"],
+  ["GDTC", "Ngữ Văn", "Toán", "HĐTN", "Toán"],
+  ["GDTC", "Công Nghệ", "LSĐL", "Âm nhạc", "Ngữ Văn"],
+  ["LSĐL", "KHTN", "LSĐL", "KHTN", "Ngữ Văn"],
+  ["EMG English", "Toán", "Tin học", "EMG Math", "EMG Science"],
+  ["EMG English", "Toán", "Toán", "EMG Math", "EMG Science"],
+  ["EMG English", "Tiếng Anh", "GDĐP", "KHTN", "EMG Science"],
+  ["N khóa", "GDĐP", "", "", ""],
 ];
 
 const daysOfWeek = ["Chủ nhật", "Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7"];
