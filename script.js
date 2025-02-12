@@ -4,9 +4,9 @@ const timetable = [
   ["GDTC", "Ngữ Văn", "Toán", "HĐTN", "Toán"],
   ["GDTC", "Công Nghệ", "LSĐL", "Âm nhạc", "Ngữ Văn"],
   ["LSĐL", "KHTN", "LSĐL", "KHTN", "Ngữ Văn"],
-  ["EMG English", "Toán", "Tin học", "EMG Math", "EMG Science"],
-  ["EMG English", "Toán", "Toán", "EMG Math", "EMG Science"],
-  ["EMG English", "Tiếng Anh", "GDĐP", "KHTN", "EMG Science"],
+  ["EMG English", "Ngữ Văn", "Toán", "EMG Math", "EMG Science"],
+  ["EMG English", "Ngữ Văn", "Toán", "EMG Math", "EMG Science"],
+  ["EMG English", "Tiếng Anh", "Tiếng Anh", "KHTN", "EMG Science"],
   ["N khóa", "GDĐP", "", "", ""],
 ];
 
